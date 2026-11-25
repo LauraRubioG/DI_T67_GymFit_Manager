@@ -124,7 +124,7 @@ DI_T67_GymFit_Manager/
 
 ---
 
-## Autora
+## Autora 
 
 **Laura Rubio Gallardo**  
 2.º DAM · Desarrollo de Interfaces
