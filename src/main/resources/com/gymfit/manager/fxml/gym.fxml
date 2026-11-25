@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gymfit.manager.controller.GymController"
+            prefWidth="1280.0" prefHeight="800.0">
+
+    <!-- ZONA SUPERIOR: Menús + Cabecera corporativa verde + Barra de herramientas -->
+    <top>
+        <VBox>
+            <MenuBar>
+                <Menu text="Archivo">
+                    <MenuItem text="Nuevo socio" onAction="#onNuevoSocio">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem text="Guardar socio" onAction="#onGuardarSocio">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Salir" onAction="#onSalir">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                </Menu>
+
+                <Menu text="Editar">
+                    <MenuItem text="Limpiar formulario" onAction="#onLimpiarFormulario">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem text="Buscar socio" onAction="#onEnfocarBuscador">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                </Menu>
+
+                <Menu text="Socios">
+                    <MenuItem text="Editar socio seleccionado" onAction="#onEditarSeleccionado">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem text="Activar / Dar de baja" onAction="#onCambiarEstadoSeleccionado"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Eliminar socio" onAction="#onEliminarSeleccionado">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                </Menu>
+
+                <Menu text="Ayuda">
+                    <MenuItem text="Atajos de teclado" onAction="#onMostrarAtajos">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="F1" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem text="Acerca de GymFit Manager" onAction="#onAcercaDe"/>
+                </Menu>
+            </MenuBar>
+
+            <!-- Cabecera corporativa en verde bosque -->
+            <HBox styleClass="brand-header" alignment="CENTER_LEFT" spacing="12.0">
+                <VBox spacing="1.0">
+                    <Label text="GymFit Manager" styleClass="brand-title"/>
+                    <Label text="Gestión de socios y cuotas · Recepción" styleClass="brand-subtitle"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Club Deportivo" styleClass="brand-badge"/>
+            </HBox>
+
+            <!-- Barra de herramientas en verde salvia suave -->
+            <ToolBar>
+                <Button text="＋ Nuevo" styleClass="toolbar-btn" onAction="#onNuevoSocio">
+                    <tooltip><Tooltip text="Prepara el formulario para un alta nueva (Ctrl+N)"/></tooltip>
+                </Button>
+                <Button text="✓ Guardar" styleClass="toolbar-btn" onAction="#onGuardarSocio">
+                    <tooltip><Tooltip text="Guarda el socio actual en la lista (Ctrl+S)"/></tooltip>
+                </Button>
+                <Separator orientation="VERTICAL"/>
+                <Button text="⌕ Buscar" styleClass="toolbar-btn" onAction="#onEnfocarBuscador">
+                    <tooltip><Tooltip text="Salta al buscador de socios (Ctrl+F)"/></tooltip>
+                </Button>
+                <Button text="✎ Editar" styleClass="toolbar-btn" onAction="#onEditarSeleccionado">
+                    <tooltip><Tooltip text="Carga el socio seleccionado en el formulario (Ctrl+E)"/></tooltip>
+                </Button>
+                <Separator orientation="VERTICAL"/>
+                <Button text="✕ Eliminar" styleClass="toolbar-btn" onAction="#onEliminarSeleccionado">
+                    <tooltip><Tooltip text="Elimina el socio seleccionado previa confirmación (Supr)"/></tooltip>
+                </Button>
+            </ToolBar>
+        </VBox>
+    </top>
+
+    <!-- ZONA CENTRAL: Formulario compacto (izq) y tabla de socios (der) -->
+    <center>
+        <HBox spacing="16.0">
+            <padding>
+                <Insets top="14.0" right="16.0" bottom="14.0" left="16.0"/>
+            </padding>
+
+            <!-- Tarjeta izquierda: formulario en 2 columnas para que quepa todo sin scroll -->
+            <VBox spacing="11.0" styleClass="card" prefWidth="470.0" minWidth="440.0">
+                <VBox spacing="2.0">
+                    <Label fx:id="lblTituloFormulario" text="Alta de nuevo socio" styleClass="section-title"/>
+                    <Label text="Los campos con * son obligatorios" styleClass="section-subtitle"/>
+                </VBox>
+
+                <!-- Fila 1: Nombre y Apellidos lado a lado -->
+                <HBox spacing="10.0">
+                    <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                        <Label text="Nombre *" styleClass="field-label"/>
+                        <TextField fx:id="txtNombre" promptText="Ej. Laura"/>
+                    </VBox>
+                    <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                        <Label text="Apellidos *" styleClass="field-label"/>
+                        <TextField fx:id="txtApellidos" promptText="Ej. Gómez Ruiz"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Fila 2: Fecha de nacimiento y Provincia lado a lado -->
+                <HBox spacing="10.0">
+                    <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                        <Label text="Fecha de nacimiento *" styleClass="field-label"/>
+                        <DatePicker fx:id="dpFechaNacimiento" promptText="dd/mm/aaaa" maxWidth="Infinity"/>
+                    </VBox>
+                    <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                        <Label text="Provincia *" styleClass="field-label"/>
+                        <ComboBox fx:id="cbProvincia" promptText="Selecciona provincia" maxWidth="Infinity"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Sexo -->
+                <VBox spacing="4.0">
+                    <Label text="Sexo *" styleClass="field-label"/>
+                    <HBox fx:id="cajaSexo" spacing="16.0"/>
+                </VBox>
+
+                <!-- Tipo de cuota -->
+                <VBox spacing="4.0">
+                    <Label text="Tipo de cuota *" styleClass="field-label"/>
+                    <FlowPane fx:id="cajaCuotas" hgap="12.0" vgap="7.0"/>
+                </VBox>
+
+                <!-- Clases dirigidas -->
+                <VBox spacing="4.0">
+                    <Label text="Clases dirigidas" styleClass="field-label"/>
+                    <FlowPane fx:id="cajaClases" hgap="12.0" vgap="7.0"/>
+                </VBox>
+
+                <!-- IBAN -->
+                <VBox spacing="4.0">
+                    <Label text="IBAN (domiciliación)" styleClass="field-label"/>
+                    <TextField fx:id="txtIban" promptText="Opcional · Ej. ES91 2100 0418 4502 0005 1332"/>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <!-- Botones del formulario -->
+                <HBox spacing="10.0">
+                    <Button fx:id="btnGuardar" text="Guardar socio" styleClass="btn-primary" onAction="#onGuardarSocio"/>
+                    <Button text="Limpiar" styleClass="btn-secondary" onAction="#onLimpiarFormulario"/>
+                </HBox>
+            </VBox>
+
+            <!-- Tarjeta derecha: tabla de socios -->
+            <VBox spacing="12.0" styleClass="card" HBox.hgrow="ALWAYS">
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <VBox spacing="2.0">
+                        <Label text="Socios registrados" styleClass="section-title"/>
+                        <Label fx:id="lblContador" text="0 socios" styleClass="section-subtitle"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="txtBuscar" promptText="Buscar por nombre, provincia o cuota..." prefWidth="260.0"/>
+                </HBox>
+
+                <TableView fx:id="tablaSocios" VBox.vgrow="ALWAYS">
+                    <placeholder>
+                        <Label text="No hay socios que coincidan con la búsqueda."/>
+                    </placeholder>
+                    <columns>
+                        <TableColumn fx:id="colNombre" text="Socio" prefWidth="170.0"/>
+                        <TableColumn fx:id="colFecha" text="F. nacimiento" prefWidth="100.0"/>
+                        <TableColumn fx:id="colProvincia" text="Provincia" prefWidth="95.0"/>
+                        <TableColumn fx:id="colCuota" text="Cuota" prefWidth="125.0"/>
+                        <TableColumn fx:id="colClases" text="Clases" prefWidth="160.0"/>
+                        <TableColumn fx:id="colEstado" text="Estado" prefWidth="70.0"/>
+                    </columns>
+                    <contextMenu>
+                        <ContextMenu>
+                            <items>
+                                <MenuItem text="Editar socio" onAction="#onEditarSeleccionado"/>
+                                <MenuItem text="Duplicar socio" onAction="#onDuplicarSeleccionado"/>
+                                <MenuItem text="Activar / Dar de baja" onAction="#onCambiarEstadoSeleccionado"/>
+                                <SeparatorMenuItem/>
+                                <MenuItem text="Eliminar socio" onAction="#onEliminarSeleccionado"/>
+                            </items>
+                        </ContextMenu>
+                    </contextMenu>
+                </TableView>
+
+                <HBox spacing="10.0">
+                    <Button text="Editar seleccionado" styleClass="btn-secondary" onAction="#onEditarSeleccionado"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Eliminar socio" styleClass="btn-danger" onAction="#onEliminarSeleccionado"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+
+    <!-- ZONA INFERIOR: Barra de estado -->
+    <bottom>
+        <HBox styleClass="status-bar">
+            <Label fx:id="lblEstado" text="Listo · Rellena el formulario para dar de alta un socio o selecciona uno de la tabla."/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
