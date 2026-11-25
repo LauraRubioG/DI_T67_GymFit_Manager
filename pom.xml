@@ -40,6 +40,7 @@
         </dependency>
     </dependencies>
 
+    <!-- Configuración de compilación (Java 21) y del plugin de JavaFX para lanzar la aplicación desde GymFitApp -->
     <build>
         <plugins>
             <plugin>
@@ -47,8 +48,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <release>21</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -57,10 +57,9 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.gymfit.manager/com.gymfit.manager.HelloApplication</mainClass>
+                            <mainClass>com.gymfit.manager/com.gymfit.manager.GymFitApp</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

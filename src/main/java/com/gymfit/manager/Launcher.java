@@ -4,6 +4,7 @@ import javafx.application.Application;
 
 public class Launcher {
     public static void main(String[] args) {
-        Application.launch(HelloApplication.class, args);
+        //Cambiamos el que viene por defecto HelloApplication por el nombre de nuestra clase
+        Application.launch(GymFitApp.class, args);
     }
 }
